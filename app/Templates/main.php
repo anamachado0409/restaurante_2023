@@ -854,7 +854,7 @@
     <section class="content">
       <div class="container-fluid">
         <!-- início da View -->
-        <?=$view?>
+         <?=$view?> <!-- Nossa View -->
         <!-- Fim da View -->
       </div>
     </section>

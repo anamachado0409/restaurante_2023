@@ -16,10 +16,13 @@ class View{
         $this->template = $template;
     }
 
+    private function createStringRequireView(){
+        return VIEWS_PATH."/".$this->view.".php";// return VIEWS_PATH."/".$view.".php";
+    }
 
     public function show(){
         ob_start();
-        require $this->view;
+        require $this->createStringRequireView();// require $this->view
         $view = ob_get_clean();
         require $this->template; /*require -> carrega um arquivo mesma que ele já tenha sido carregado - Se ele não achar o arquivo ele dá erro / require_once -> carrega um arquivo apenas se ele não foi carregado / include -> se ele não achar o arquivo, ele continua o código*/
     }
