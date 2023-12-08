@@ -11,7 +11,7 @@ class View{
 
     private $template;
 
-    public function __construct($view,$template){
+    public function __construct($view,$template = TEMPLATE_DEFAULT){
         $this->view = $view; /* Este objeto recebe na sua view a view que o usuário passou */
         $this->template = $template;
     }
