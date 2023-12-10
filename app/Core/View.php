@@ -11,24 +11,26 @@ class View{
 
     private $template;
 
-    public function __construct($view,$template = TEMPLATE_DEFAULT){
+
+    public function __construct($view, $template = TEMPLATE_DEFAULT, $data = []){
         $this->view = $view; /* Este objeto recebe na sua view a view que o usuário passou */
         $this->template = $template;
+        $this->data = $data;
     }
 
     private function createStringRequireView()
     {
-        $view = str_replace(".php", '', $this->view);
-        $view = str_replace('.view', '', $view);
+        $view = (substr($this->view, -9, 9) == ".view.php") ?
+            substr_replace($this->view, "", -9, 9) : $this->view;
         $view = str_replace(".", '/', $view);
         return VIEWS_PATH . "/" . $view .".view.php";// return VIEWS_PATH."/".$view.".php";
     }
 
     private function createStringRequireTemplate()
     {
-        $template = str_replace(".", "/",
-        str_replace(".template", "",
-        str_replace(".php", "",  $this->template)));
+        $template = (substr($this->template, -13, 13) == ".template.php") ?
+            substr_replace($this->template, "", -13, 13) : $this->template;
+        $template = str_replace(".", '/', $template);
         return TEMPLATES_PATH . "/" . $template . ".template.php";// return VIEWS_PATH."/".$view.".php";
     }
 
