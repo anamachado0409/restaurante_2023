@@ -11,6 +11,7 @@ class View{
 
     private $template;
 
+    private $data;
 
     public function __construct($view, $template = TEMPLATE_DEFAULT, $data = []){
         $this->view = $view; /* Este objeto recebe na sua view a view que o usuário passou */
@@ -34,7 +35,19 @@ class View{
         return TEMPLATES_PATH . "/" . $template . ".template.php";// return VIEWS_PATH."/".$view.".php";
     }
 
-    public function show(){
+    public function __set($name, $value){
+        $this->data[$name] = $value;
+    }
+
+    public function __get($name)
+    {
+        return (isset($this->data[$name])) ? $this->data[$name] : null;
+    }
+
+    public function show($data = [])
+    {
+        $data = array_merge($this->data, $data);
+        extract($data);
         ob_start();
         require $this->createStringRequireView();// require $this->view
         $view = ob_get_clean();
