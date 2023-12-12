@@ -13,9 +13,9 @@ class Produtos extends Controller{
         $view->show();
     }
 
-    public function produto($id = 0){
+    public function produto($id = 0, $nome = 'Joaquim'){
         $view = new View('produtos.item');
-        $view->nome = 'x-tudo'; //seta um valor a view
+        $view->nome = $nome; //seta um valor a view
         $view->valor = 27.90;
         $view->id = $id;
         $view->show();  
