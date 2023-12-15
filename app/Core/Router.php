@@ -22,7 +22,7 @@ class Router{
 
     private $method;
 
-    private $paramns = array();
+    private $params = array();
 
     private function __construct($url, $controller, $action, $method){
         $this->url = (substr($url, 0, 1) == '/') ? substr_replace($url, '', 0, 1) : $url;
@@ -59,7 +59,7 @@ class Router{
         $routers = ($method == "GET") ? self::$get : self::$post;
 
         foreach($routers as $router){
-            $expression = preg_replace("(\{[a-z0-9_]{1,}\})", "([a-zA-Z0-9_\-|\s]{1,})", $router->url);
+            $expression = preg_replace("(\{[a-z0-9_]{1,}\})", "([a-zA-Z0-9_\-|\sáàâãéèêíïóôõöúçñüÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑÜ]{1,})", $router->url);
 
             if(preg_match("#^($expression)*$#i",$url,$matches)===1)
             {
@@ -75,6 +75,22 @@ class Router{
         return false;
     }
 
+    public static function  getRouterbyController($controller, $action = 'index', $method = 'GET', $parameters = []){
+        $routers = ($method == "GET") ? self::$get : self::$post;
+        foreach($routers as $router){
+            if($router->controller == $controller && $router->action == $action){
+                if(count($router->params) == count($parameters)){
+                    foreach($router->params as &$param){
+                        $param = array_shift($parameters);
+                    }
+                    return $router;
+                }
+                
+            }
+        }
+        return false;
+    }
+
     public function getController(){
         return $this->controller;
     }
@@ -85,5 +101,13 @@ class Router{
 
     public function getParameters(){
         return $this->params;
+    }
+
+    public function getUrl(){
+        $url = $this->url;
+        foreach($this->params as $var => $param){
+            $url = str_replace("{{$var}}", urlencode($param), $url);
+        }
+        return $url;
     }
 }

@@ -30,7 +30,6 @@ if($router){
     die('page 404');
 }
 
-
 //echo $_GET['url']; testa se o arquivo .htaccess está funcionando
 
 
