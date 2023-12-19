@@ -16,3 +16,4 @@ defined ('TEMPLATE_DEFAULT') || define('TEMPLATE_DEFAULT', 'main');
 
 defined ('COMPOSER_PATH') || define('COMPOSER_PATH', APPLICATION_PATH . '/vendor');
 
+defined ('CONFIGS_PATH') || define('CONFIGS_PATH', APP_PATH . "/Configs");
