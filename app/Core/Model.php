@@ -15,7 +15,15 @@ abstract class Model{
 
     protected $__data = [];
 
+    private $where = [];
+
     protected $pk = 'id';
+
+    public function __construct($id = null){
+        if(isset($id)){
+            $this->load($id);
+        }
+    }
 
     public function __set(string $name, $value){
         if(in_array($name,$this->columns)){
@@ -33,7 +41,16 @@ abstract class Model{
         $stm = $conn->prepare($sql);
         $stm->execute($data);
         return $stm;
-    }    
+    }
+    
+    private function load($id){
+        $this->where($this->pk, '=', $id);
+        $stm = $this->select();
+        $result = $stm->fetch(\PDO::FETCH_ASSOC);
+        if($result){
+            $this->__data = $result;
+        }
+    }
     /**
      * Inserção no banco de dados
      * @return int
@@ -68,8 +85,9 @@ abstract class Model{
 
     private function select(){
         $columns = implode(', ',$this->columns);
-        $sql = "SELECT $columns FROM $this->table;";
-        return $this->query($sql);
+        [$where, $data] = $this->flushWhere();
+        $sql = "SELECT $columns FROM $this->table$where;";
+        return $this->query($sql, $data);
     }
 
     public function all(){
@@ -77,5 +95,29 @@ abstract class Model{
     }
     public function get(){
         return $this->select()->fetchObject(get_class($this));
+    }
+
+    public function where($column, $comparison, $value){
+        $this->where[] = ['AND', $column, $comparison, $value];
+        return $this;
+    }
+
+    public function orWhere($column, $comparison, $value){
+        $this->where[] = ['OR', $column, $comparison, $value];
+        return $this;
+    }
+
+    private function flushWhere(){
+        $where = '';
+        $data = [];
+        if(count($this->where)>0){
+            $this->where[0][0] = 'WHERE';
+            foreach($this->where as $w){
+                $where .= " $w[0] $w[1] $w[2] :$w[1]";
+                $data[$w[1]] = $w[3];
+            }
+            $this->where = [];
+        }
+        return [$where, $data];
     }
 }
