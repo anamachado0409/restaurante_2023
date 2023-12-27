@@ -3,14 +3,14 @@
 namespace Models;
 use Core\Model;
 
-class Produto extends Model{
+class Pessoa extends Model{
     protected $table = 'produtos';
     protected $columns = ['id',
                         'nome',
-                        'descricao',
-                        'valor_un',
-                        'unidade_medida',
-                        'disponivel'];
+                        'telefone',
+                        'cpf',
+                        'rg',
+                        'email'];
     protected $__protected_delete = true;
 
     protected $__audit_date = true;
