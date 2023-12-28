@@ -6,6 +6,7 @@
 
 namespace Core;
 
+
 class View{
     private $view; /* private -> só consegue acessar ele de dentro da classe, public -> Consegue acessar do lado de fora tbm, protected -> Consegue acessar ele e seus filhos, mas só de dentro*/
 
@@ -42,10 +43,15 @@ class View{
         return (isset($this->data[$name])) ? $this->data[$name] : null;
     }
 
+    private function getTemplateConfigs(){
+        return Configs::getConfig('templates');
+    }
+
     public function show($data = [])
     {
         $data = array_merge($this->data, $data);
         extract($data);
+        $template = $this->getTemplateConfigs();
         ob_start();
         require $this->createStringRequireView();// require $this->view
         $view = ob_get_clean();
