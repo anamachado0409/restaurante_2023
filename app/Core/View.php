@@ -14,6 +14,8 @@ class View{
 
     private $data;
 
+    private $template_subtitle = "";
+
     public function __construct($view, $template = TEMPLATE_DEFAULT, $data = []){
         $this->view = $view; /* Este objeto recebe na sua view a view que o usuário passou */
         $this->template = $template;
@@ -44,7 +46,21 @@ class View{
     }
 
     private function getTemplateConfigs(){
-        return Configs::getConfig('templates');
+        $template = Configs::getConfig('templates');
+        if(!empty($this->template_subtitle) && (!isset($template['subtitle']) || $template['subtitle'])){
+            if(isset($template['prefix']) && !empty($template['prefix'])){
+                $template['title'] .= $template['prefix'] . $this->template_subtitle;
+            } else if(isset($template['sufix']) && !empty($template['sufix'])){
+                $template['title'] = $this->template_subtitle.$template['sufix'].$template['title'];
+            } else{
+                $template['title'] = $this->template_subtitle;
+            }
+        }
+        return $template;
+    }
+
+    public function setTitle($title){
+        $this->template_subtitle = $title;
     }
 
     public function show($data = [])

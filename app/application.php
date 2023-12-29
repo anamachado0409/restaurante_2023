@@ -15,5 +15,3 @@ require_once('Configs/app.php');
 require_once('Core/helpers.php');
 
 require_once('Configs/routers.php');
-// require_once('Core/View.php');
-// require_once('Controllers/Home.php');
