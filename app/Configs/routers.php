@@ -17,4 +17,5 @@ Router::get("/500",Controllers\ErrorController::class, 'page500');
 
 //rotas de usuário
 Router::get('/usuarios/novo', \Controllers\Usuarios\Cadastro::class);
-Router::post('/usuarios/novo', \Controllers\Usuarios\Cadastro::class, 'salvar');
+Router::post('/usuarios/novo', \Controllers\Usuarios\Cadastro::class, 'save');
+Router::post('/usuarios/buscar', \Controllers\Usuarios\Cadastro::class, 'find');

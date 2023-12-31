@@ -62,6 +62,7 @@ class View{
 
     public function setTitle($title){
         $this->template_subtitle = $title;
+        return $this;
     }
 
     public function show($data = [])
