@@ -1590,7 +1590,7 @@ CREATE TABLE `pessoas` (
   `rg` varchar(20) DEFAULT NULL,
   `rg_expedidor` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `ciracao_data` datetime NOT NULL DEFAULT current_timestamp(),
+  `criacao_data` datetime NOT NULL DEFAULT current_timestamp(),
   `alteracao_data` datetime DEFAULT NULL,
   `exclusao_data` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -1599,7 +1599,7 @@ CREATE TABLE `pessoas` (
 -- Extraindo dados da tabela `pessoas`
 --
 
-INSERT INTO `pessoas` (`id`, `nome`, `telefone`, `cpf`, `rg`, `rg_expedidor`, `email`, `ciracao_data`, `alteracao_data`, `exclusao_data`) VALUES
+INSERT INTO `pessoas` (`id`, `nome`, `telefone`, `cpf`, `rg`, `rg_expedidor`, `email`, `criacao_data`, `alteracao_data`, `exclusao_data`) VALUES
 (1, 'Joaquim Scavone', '+5563988888888', '11111111111', '999999', 'SSP-TO', 'joaquim.scavone@ifto.edu.br', '2023-11-01 13:46:17', NULL, NULL),
 (2, 'Uma Lima Barros', '+5563981160897', NULL, NULL, NULL, NULL, '2023-11-01 13:56:35', NULL, NULL),
 (3, 'Yolanda Domingues Farias', '+5563992251441', NULL, NULL, NULL, NULL, '2023-11-01 13:56:35', NULL, NULL),
@@ -1893,8 +1893,9 @@ CREATE TABLE `usuarios` (
   `password` varchar(255) NOT NULL,
   `ativo` tinyint(1) NOT NULL DEFAULT 1,
   `email_confirmacao` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Armazena se o e-mail do usuário já foi confirmado.',
-  `exclusao_data` datetime DEFAULT NULL,
   `criacao_data` timestamp NULL DEFAULT current_timestamp(),
+  `alteracao_data` datetime DEFAULT NULL,
+  `exclusao_data` datetime DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --

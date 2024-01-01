@@ -188,4 +188,8 @@ abstract class Model{
     public function getData(){
         return $this->__data;
     }
+
+    public function isStorage(){
+        return $this->__storage;
+    }
 }

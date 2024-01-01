@@ -15,3 +15,9 @@ if(!function_exists('action')){
         return new Action($controller, $action, $method, $parameters);
     }
 }
+
+if(!function_exists('value')){
+    function value(&$var, $default = ''){
+        return isset($var) ? $var : $default;
+    }
+}
